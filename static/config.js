@@ -1,1 +1,1 @@
-window.API_ENDPOINT = "https://your-flask-server-ip:5000";
+window.API_ENDPOINT = "https://192.168.8.33:5000";

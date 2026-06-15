@@ -86,17 +86,18 @@ def serve_forever():
 server_thread = threading.Thread(target=serve_forever, daemon=True)
 server_thread.start()
 
-# 5. Start chromium-browser via xinit
-# Let's locate the chromium binary
+# 5. Start chromium-browser via xinit or directly on an existing display (e.g., XRDP)
 chrome_bin = "/usr/bin/chromium-browser"
 if not os.path.exists(chrome_bin):
     chrome_bin = "/usr/bin/chromium"
     if not os.path.exists(chrome_bin):
         chrome_bin = "chromium-browser" # Fallback to path lookup
 
-# Common Chromium flags optimized for Raspberry Pi Lite Kiosk displays
-kiosk_command = [
-    "xinit",
+# Check for desktop/xrdp mode
+is_desktop = "--desktop" in sys.argv or "--xrdp" in sys.argv
+
+# Common Chromium flags optimized for kiosk displays
+chrome_flags = [
     chrome_bin,
     "--kiosk",
     "--noerrdialogs",
@@ -109,19 +110,38 @@ kiosk_command = [
     "--disable-features=Translate",
     "--check-for-update-interval=31536000",
     "--user-data-dir=/tmp/chromium_kiosk",
-    f"http://localhost:{PORT}/",
-    "--",
-    "-nocursor"
+    f"http://localhost:{PORT}/"
 ]
 
-print(f"Launching screen view command: {' '.join(kiosk_command)}")
-try:
-    subprocess.run(kiosk_command, check=True)
-except FileNotFoundError:
-    print("\n[ERROR] xinit or chromium-browser not found.")
-    print("Please install display requirements on your Raspberry Pi Lite:")
-    print("  sudo apt update")
-    print("  sudo apt install -y xinit xserver-xorg chromium-browser")
-except subprocess.CalledProcessError as e:
-    print(f"\n[ERROR] X server / browser execution exited with error code: {e.returncode}")
-    print("If you are running this over SSH, make sure you have permissions (e.g. are in 'video' and 'input' groups) or try run as root.")
+if is_desktop:
+    # Run directly on the active desktop display (e.g. XRDP display)
+    display_val = os.getenv("DISPLAY")
+    if not display_val:
+        # Default RDP displays usually start around :10.0
+        display_val = ":10.0"
+        os.environ["DISPLAY"] = display_val
+        print(f"Warning: DISPLAY environment variable was not set. Defaulting to '{display_val}' for XRDP.")
+    
+    print(f"Running in Desktop/XRDP mode on display: {display_val}")
+    print(f"Launching browser command: {' '.join(chrome_flags)}")
+    try:
+        # Pass environment variables including DISPLAY
+        subprocess.run(chrome_flags, env=os.environ.copy(), check=True)
+    except FileNotFoundError:
+        print("\n[ERROR] chromium-browser not found. Please install it:")
+        print("  sudo apt install -y chromium-browser")
+else:
+    # CLI-only mode: Run X server via xinit to draw on the physical display
+    kiosk_command = ["xinit"] + chrome_flags + ["--", "-nocursor"]
+    print(f"Launching screen view command: {' '.join(kiosk_command)}")
+    try:
+        subprocess.run(kiosk_command, check=True)
+    except FileNotFoundError:
+        print("\n[ERROR] xinit or chromium-browser not found.")
+        print("Please install display requirements on your Raspberry Pi Lite:")
+        print("  sudo apt update")
+        print("  sudo apt install -y xinit xserver-xorg chromium-browser")
+    except subprocess.CalledProcessError as e:
+        print(f"\n[ERROR] X server / browser execution exited with error code: {e.returncode}")
+        print("If you are running this over SSH, make sure you have permissions (e.g. are in 'video' and 'input' groups) or try run as root.")
+
