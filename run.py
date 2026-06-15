@@ -612,6 +612,9 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Calendar Dashboard")
         self.is_desktop = is_desktop
+        
+        # Explicitly set the window size to 1920x1080
+        self.resize(1920, 1080)
 
         # Inner calendar layout widget
         self.calendar = CalendarWidget(endpoint)
