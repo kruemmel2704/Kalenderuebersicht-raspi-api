@@ -80,27 +80,35 @@
 
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: var(--bg-color);
+            background-color: #000000; /* Black bars on sides/top/bottom */
             color: var(--text-color);
             margin: 0;
-            padding: var(--container-padding);
-            padding-bottom: calc(var(--container-padding) + 60px);
+            padding: 0;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
             height: 100vh;
+            width: 100vw;
             box-sizing: border-box;
             overflow: hidden;
         }
 
         .container {
-            max-width: 95vw;
+            aspect-ratio: 16 / 9;
             width: 100%;
+            max-width: 177.78vh; /* 16/9 * height */
+            height: auto;
+            max-height: 100%;
+            margin: auto;
             display: flex;
             flex-direction: column;
-            flex-grow: 1;
-            min-height: 0;
+            box-sizing: border-box;
             position: relative;
+            min-height: 0;
+            padding: var(--container-padding);
+            padding-bottom: calc(var(--container-padding) + 60px);
+            background-color: var(--bg-color);
+            overflow: hidden; /* Keeps all content within the 16:9 box */
         }
 
         .header-area {
@@ -418,7 +426,7 @@
         }
 
         .current-time-indicator {
-            position: fixed;
+            position: absolute; /* Absolute positioning relative to 16:9 container */
             top: 1rem;
             right: 1rem;
             font-size: 1.2rem;
@@ -472,7 +480,7 @@
         }
 
         .spotify-footer {
-            position: fixed;
+            position: absolute; /* Positioned relative to 16:9 container */
             bottom: 0;
             left: 0;
             width: 100%;
@@ -495,7 +503,7 @@
         }
 
         .spotify-footer.expanded {
-            max-height: 90vh;
+            max-height: 90%; /* Scales relative to 16:9 container height instead of viewport */
         }
 
         .footer-main-row {
@@ -675,7 +683,7 @@
 
         /* Floating Action Button (FAB) */
         .spotify-fab {
-            position: fixed;
+            position: absolute; /* Positioned relative to 16:9 container */
             bottom: 2rem;
             right: 2rem;
             width: 60px;
