@@ -1,0 +1,126 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+        x:Class="CalendarDashboard.MainWindow"
+        Title="Calendar Dashboard"
+        Background="Black"
+        FontFamily="Inter, $Default"
+        WindowState="FullScreen">
+  
+  <Grid Name="RootGrid" Background="Black">
+    <Border Name="CalendarContainer" ClipToBounds="True" CornerRadius="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+      <Grid RowDefinitions="Auto, *, Auto" Margin="32">
+        
+        <!-- HEADER -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Margin="0,0,0,24">
+          <!-- Logo -->
+          <Image Name="LogoImage" Grid.Column="0" Height="65" Width="200" HorizontalAlignment="Left" Stretch="Uniform"/>
+          
+          <!-- Title & Date -->
+          <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Wochenplan" FontSize="40" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+            <TextBlock Name="DateLabel" Text="Heute ist ..." FontSize="18" FontWeight="Medium" Foreground="#94a3b8" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+          </StackPanel>
+          
+          <!-- Clock & Status -->
+          <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Spacing="8">
+            <Border Background="#1a365d" BorderBrush="#2a4365" BorderThickness="1" CornerRadius="8" Padding="16,8">
+              <TextBlock Name="ClockLabel" Text="00:00:00" FontSize="24" FontWeight="Bold" Foreground="#cbd5e1" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Name="StatusBorder" Background="#1e293b" BorderBrush="#2a4365" BorderThickness="1" CornerRadius="15" Padding="12,6" HorizontalAlignment="Right">
+              <TextBlock Name="StatusLabel" Text="Live Sync" FontSize="14" Foreground="#64748b"/>
+            </Border>
+          </StackPanel>
+        </Grid>
+        
+        <!-- COLUMNS GRID -->
+        <Grid Name="ColumnsGrid" Grid.Row="1" ColumnDefinitions="*, *, *, *, *" Margin="0,0,0,24">
+          <!-- Column 0 -->
+          <Grid Grid.Column="0" RowDefinitions="Auto, *" Margin="0,0,10,0">
+            <TextBlock Name="ColHeader0" Grid.Row="0" Text="Montag" FontSize="20" FontWeight="Bold" Foreground="#e2e8f0" Margin="0,0,0,8"/>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+              <StackPanel Name="ColPanel0" Spacing="12" VerticalAlignment="Top"/>
+            </ScrollViewer>
+          </Grid>
+          
+          <!-- Column 1 -->
+          <Grid Grid.Column="1" RowDefinitions="Auto, *" Margin="10,0,10,0">
+            <TextBlock Name="ColHeader1" Grid.Row="0" Text="Dienstag" FontSize="20" FontWeight="Bold" Foreground="#e2e8f0" Margin="0,0,0,8"/>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+              <StackPanel Name="ColPanel1" Spacing="12" VerticalAlignment="Top"/>
+            </ScrollViewer>
+          </Grid>
+          
+          <!-- Column 2 -->
+          <Grid Grid.Column="2" RowDefinitions="Auto, *" Margin="10,0,10,0">
+            <TextBlock Name="ColHeader2" Grid.Row="0" Text="Mittwoch" FontSize="20" FontWeight="Bold" Foreground="#e2e8f0" Margin="0,0,0,8"/>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+              <StackPanel Name="ColPanel2" Spacing="12" VerticalAlignment="Top"/>
+            </ScrollViewer>
+          </Grid>
+          
+          <!-- Column 3 -->
+          <Grid Grid.Column="3" RowDefinitions="Auto, *" Margin="10,0,10,0">
+            <TextBlock Name="ColHeader3" Grid.Row="0" Text="Donnerstag" FontSize="20" FontWeight="Bold" Foreground="#e2e8f0" Margin="0,0,0,8"/>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+              <StackPanel Name="ColPanel3" Spacing="12" VerticalAlignment="Top"/>
+            </ScrollViewer>
+          </Grid>
+          
+          <!-- Column 4 -->
+          <Grid Grid.Column="4" RowDefinitions="Auto, *" Margin="10,0,0,0">
+            <TextBlock Name="ColHeader4" Grid.Row="0" Text="Freitag" FontSize="20" FontWeight="Bold" Foreground="#e2e8f0" Margin="0,0,0,8"/>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+              <StackPanel Name="ColPanel4" Spacing="12" VerticalAlignment="Top"/>
+            </ScrollViewer>
+          </Grid>
+        </Grid>
+        
+        <!-- SPOTIFY FOOTER -->
+        <Border Grid.Row="2" Name="SpotifyFooterBorder" Background="#1a365d" BorderBrush="#2a4365" BorderThickness="1" CornerRadius="12" Padding="20,15">
+          <Grid ColumnDefinitions="Auto, *, Auto, Auto">
+            
+            <TextBlock Grid.Column="0" Text="Spotify" Foreground="#1DB954" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,16,0"/>
+            
+            <TextBlock Grid.Column="1" Name="TrackInfoLabel" Text="Keine Wiedergabe aktiv" Foreground="#e2e8f0" FontSize="16" FontWeight="Medium" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+            
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center" Margin="16,0">
+              <Button Name="BtnPrev" Content="⏮" Click="OnPrevClick" Classes="SpotifyBtn"/>
+              <Button Name="BtnPlay" Content="▶" Click="OnPlayClick" Classes="SpotifyBtn"/>
+              <Button Name="BtnNext" Content="⏭" Click="OnNextClick" Classes="SpotifyBtn"/>
+              <Button Name="BtnPlaylist" Content="☰" Click="OnPlaylistClick" Classes="SpotifyBtn"/>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center" Spacing="8">
+              <Slider Name="VolSlider" Minimum="0" Maximum="100" Value="50" Width="120" VerticalAlignment="Center" ValueChanged="OnVolumeChanged"/>
+            </StackPanel>
+            
+          </Grid>
+        </Border>
+        
+      </Grid>
+    </Border>
+  </Grid>
+
+  <Window.Styles>
+    <Style Selector="Button.SpotifyBtn">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="Foreground" Value="#e2e8f0"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="FontSize" Value="22"/>
+      <Setter Property="Width" Value="40"/>
+      <Setter Property="Height" Value="40"/>
+      <Setter Property="HorizontalContentAlignment" Value="Center"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+    <Style Selector="Button.SpotifyBtn:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#33ffffff"/>
+      <Setter Property="Foreground" Value="White"/>
+    </Style>
+    <Style Selector="Slider">
+      <Setter Property="Foreground" Value="#1DB954"/>
+    </Style>
+  </Window.Styles>
+</Window>

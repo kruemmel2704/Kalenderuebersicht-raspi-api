@@ -1,0 +1,37 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:CalendarDashboard"
+        x:Class="CalendarDashboard.PlaylistDialog"
+        Title="Spotify Playlists"
+        Width="500" Height="400"
+        WindowStartupLocation="CenterOwner"
+        Background="#102a4e"
+        CanResize="False"
+        SystemDecorations="None">
+  
+  <Border BorderBrush="#2a4365" BorderThickness="2" CornerRadius="12" Padding="15">
+    <Grid RowDefinitions="Auto, *, Auto" RowSpacing="10">
+      
+      <!-- Search -->
+      <TextBox Name="SearchInput" Grid.Row="0" PlaceholderText="Nach Playlists suchen..." Background="#1a365d" Foreground="White" BorderBrush="#2a4365" BorderThickness="1" CornerRadius="8" KeyDown="OnSearchKeyDown"/>
+      
+      <!-- Results List -->
+      <ListBox Name="PlaylistListBox" Grid.Row="1" Background="#1a365d" BorderBrush="#2a4365" BorderThickness="1" CornerRadius="8" Foreground="White" DoubleTapped="OnListBoxDoubleTapped">
+        <ListBox.ItemTemplate>
+          <DataTemplate x:DataType="local:Playlist">
+            <Border BorderBrush="#2a4365" BorderThickness="0,0,0,1" Padding="10">
+              <StackPanel>
+                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="14" Foreground="White"/>
+                <TextBlock Text="{Binding Owner.DisplayName, FallbackValue='Unbekannt', StringFormat='Von \{0\}'}" FontSize="12" Foreground="#94a3b8" Margin="0,4,0,0"/>
+              </StackPanel>
+            </Border>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+      
+      <!-- Close -->
+      <Button Grid.Row="2" Content="Schließen" Background="#cbd5e1" Foreground="Black" FontWeight="Bold" CornerRadius="8" Padding="16,8" HorizontalAlignment="Right" Click="OnCloseClick"/>
+      
+    </Grid>
+  </Border>
+</Window>
