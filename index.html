@@ -19,6 +19,63 @@
             --accent: #007bb5;
             --accent-hover: #005a87;
             --border: #2a4365;
+            
+            /* Sizing variables */
+            --main-title-size: 3rem;
+            --date-font-size: 1.25rem;
+            --header-font-size: 1.25rem;
+            --title-font-size: 1.1rem;
+            --time-font-size: 1rem;
+            --time-min-width: 75px;
+            --card-padding: 1rem;
+            --container-padding: 2rem;
+            --logo-height: 65px;
+            --gap: 1rem;
+        }
+
+        @media (max-width: 1600px) {
+            :root {
+                --main-title-size: 2.5rem;
+                --date-font-size: 1.1rem;
+                --header-font-size: 1.1rem;
+                --title-font-size: 1rem;
+                --time-font-size: 0.9rem;
+                --time-min-width: 65px;
+                --card-padding: 0.8rem;
+                --container-padding: 1.5rem;
+                --logo-height: 55px;
+                --gap: 0.75rem;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            :root {
+                --main-title-size: 2rem;
+                --date-font-size: 1rem;
+                --header-font-size: 1rem;
+                --title-font-size: 0.9rem;
+                --time-font-size: 0.8rem;
+                --time-min-width: 55px;
+                --card-padding: 0.6rem;
+                --container-padding: 1rem;
+                --logo-height: 45px;
+                --gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 800px) {
+            :root {
+                --main-title-size: 1.5rem;
+                --date-font-size: 0.9rem;
+                --header-font-size: 0.85rem;
+                --title-font-size: 0.8rem;
+                --time-font-size: 0.75rem;
+                --time-min-width: 50px;
+                --card-padding: 0.5rem;
+                --container-padding: 0.5rem;
+                --logo-height: 35px;
+                --gap: 0.4rem;
+            }
         }
 
         body {
@@ -26,8 +83,8 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
-            padding: 2rem;
-            padding-bottom: 90px;
+            padding: var(--container-padding);
+            padding-bottom: calc(var(--container-padding) + 60px);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -50,19 +107,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1.5rem;
+            gap: var(--gap);
             margin-bottom: 0.5rem;
         }
 
         .logo {
-            height: 65px;
+            height: var(--logo-height);
             width: auto;
             object-fit: contain;
         }
 
         h1 {
             text-align: center;
-            font-size: 3rem;
+            font-size: var(--main-title-size);
             color: var(--text-color);
             font-weight: 700;
             margin: 0;
@@ -71,8 +128,8 @@
         .date-display {
             text-align: center;
             color: #94a3b8;
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
+            font-size: var(--date-font-size);
+            margin-bottom: var(--gap);
             font-weight: 500;
         }
 
@@ -80,7 +137,7 @@
             text-align: center;
             font-size: 0.9rem;
             color: #64748b;
-            margin-bottom: 2rem;
+            margin-bottom: var(--gap);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -133,9 +190,15 @@
 
         .events-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(5, 1fr); /* 5 columns side-by-side in landscape */
+            gap: var(--gap);
             width: 100%;
+        }
+
+        @media (orientation: portrait) {
+            .events-list {
+                grid-template-columns: 1fr; /* Stacked vertically in portrait */
+            }
         }
 
         .expand-action-container {
@@ -181,7 +244,7 @@
             min-width: 0;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: var(--gap);
         }
 
         .day-column.past-day {
@@ -190,7 +253,7 @@
         }
 
         .day-header {
-            font-size: 1.25rem;
+            font-size: var(--header-font-size);
             font-weight: 600;
             color: #e2e8f0;
             margin-top: 0;
@@ -212,11 +275,11 @@
             background-color: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 1rem;
+            padding: var(--card-padding);
             display: flex;
             justify-content: flex-start;
             align-items: flex-start;
-            gap: 0.75rem;
+            gap: var(--gap);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
@@ -275,8 +338,8 @@
         .event-time {
             font-weight: 600;
             color: #60a5fa;
-            font-size: 1rem;
-            min-width: 75px;
+            font-size: var(--time-font-size);
+            min-width: var(--time-min-width);
             flex-shrink: 0;
             margin-top: 0.15rem;
         }
@@ -294,7 +357,7 @@
         }
 
         .event-title {
-            font-size: 1.1rem;
+            font-size: var(--title-font-size);
             font-weight: 500;
             color: #e2e8f0;
             word-wrap: break-word;
@@ -302,23 +365,23 @@
         }
 
         .event-assignee {
-            font-size: 0.9rem;
+            font-size: calc(var(--title-font-size) - 0.15rem);
             color: #94a3b8;
             font-weight: 400;
         }
 
         .event-location {
-            font-size: 0.85rem;
+            font-size: calc(var(--title-font-size) - 0.2rem);
             color: #94a3b8;
             display: flex;
             align-items: flex-start;
-            gap: 0.4rem;
+            gap: calc(var(--gap) / 2);
             flex-wrap: wrap;
         }
 
         .event-location svg {
-            width: 14px;
-            height: 14px;
+            width: calc(var(--title-font-size) + 0.1rem);
+            height: calc(var(--title-font-size) + 0.1rem);
             fill: currentColor;
             flex-shrink: 0;
             margin-top: 0.15rem;
