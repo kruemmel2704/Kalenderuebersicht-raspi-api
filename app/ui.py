@@ -596,6 +596,9 @@ class MainWindow(QMainWindow):
             QWidget#CalendarContainer {{
                 {bg_css}
             }}
+            QWidget#CalendarContainer QLabel {{
+                background: transparent;
+            }}
         """)
 
     def closeEvent(self, event):
