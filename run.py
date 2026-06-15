@@ -101,6 +101,7 @@ is_desktop = "--desktop" in sys.argv or "--xrdp" in sys.argv
 chrome_flags = [
     chrome_bin,
     "--kiosk",
+    "--start-maximized",
     "--noerrdialogs",
     "--disable-infobars",
     "--no-sandbox",
