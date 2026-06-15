@@ -4,7 +4,7 @@
 REPO="kruemmel2704/Kalenderuebersicht-raspi-api"
 VERSION="v1.0.0"
 ZIP_FILE="CalendarDashboard-linux-arm64.zip"
-URL="https://raw.githubusercontent.com/$REPO/main/$ZIP_FILE"
+URL="https://raw.githubusercontent.com/$REPO/$VERSION/$ZIP_FILE"
 ORIG_DIR=$(pwd)
 INSTALL_DIR="$HOME/calendar_dashboard"
 
