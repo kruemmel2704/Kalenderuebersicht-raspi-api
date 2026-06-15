@@ -12,11 +12,19 @@ echo "Zielverzeichnis: $INSTALL_DIR"
 echo "Version: $VERSION"
 echo ""
 
-# 1. Ensure unzip is installed
-if ! command -v unzip &> /dev/null; then
-    echo "unzip wird benötigt, ist aber nicht installiert. Installiere..."
-    sudo apt-get update && sudo apt-get install -y unzip
-fi
+# 1. Install required system dependencies for .NET, Avalonia, SkiaSharp and extracting
+echo "Installiere erforderliche Systembibliotheken für .NET und Avalonia/Skia..."
+sudo apt-get update && sudo apt-get install -y \
+    unzip \
+    libfontconfig1 \
+    libfreetype6 \
+    libicu-dev \
+    libssl-dev \
+    libx11-6 \
+    libx11-xcb1 \
+    libxcb1 \
+    libxext6 \
+    libxi6
 
 # 2. Create installation directory
 mkdir -p "$INSTALL_DIR"
