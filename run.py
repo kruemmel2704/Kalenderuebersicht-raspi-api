@@ -4,6 +4,7 @@ import threading
 import http.server
 import socketserver
 import subprocess
+import getpass
 
 # 1. Safe helper to parse .env file (no external dependencies required)
 def load_env(filepath=".env"):
@@ -109,7 +110,7 @@ chrome_flags = [
     "--disable-translate",
     "--disable-features=Translate",
     "--check-for-update-interval=31536000",
-    "--user-data-dir=/tmp/chromium_kiosk",
+    f"--user-data-dir=/tmp/chromium_kiosk_{getpass.getuser()}",
     f"http://localhost:{PORT}/"
 ]
 
