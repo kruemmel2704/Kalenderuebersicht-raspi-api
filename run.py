@@ -645,7 +645,6 @@ class MainWindow(QMainWindow):
         super().closeEvent(event)
 
 # Running local datetime package delta setup
-import datetime
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
