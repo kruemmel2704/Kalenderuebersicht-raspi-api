@@ -4,7 +4,7 @@ import time
 import threading
 import getpass
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # PyQt5 imports
 from PyQt5.QtCore import QThread, pyqtSignal, QTimer, Qt, QSize
@@ -481,7 +481,7 @@ class CalendarWidget(QWidget):
         days_headers = []
         days_date_strings = []
         for i in range(5):
-            d = today + datetime.timedelta(days=i)
+            d = today + timedelta(days=i)
             date_str = d.strftime("%d.%m.")
             days_date_strings.append(date_str)
             
