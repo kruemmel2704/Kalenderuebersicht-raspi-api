@@ -579,17 +579,23 @@ class MainWindow(QMainWindow):
         self.worker.start()
 
     def init_theme(self):
+        # Resolve background path
+        static_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "static")
+        bg_path = os.path.join(static_dir, "background.png").replace("\\", "/")
+        
+        bg_css = f"border-image: url('{bg_path}') 0 0 0 0 stretch stretch;" if os.path.exists(bg_path) else "background-color: #102a4e;"
+        
         # Apply style sheet
-        self.setStyleSheet("""
-            * {
+        self.setStyleSheet(f"""
+            * {{
                 font-family: 'Inter', 'Segoe UI', -apple-system, Helvetica, Arial, sans-serif;
-            }
-            QMainWindow {
+            }}
+            QMainWindow {{
                 background-color: #000000;
-            }
-            QWidget#CalendarContainer {
-                background-color: #102a4e;
-            }
+            }}
+            QWidget#CalendarContainer {{
+                {bg_css}
+            }}
         """)
 
     def closeEvent(self, event):
