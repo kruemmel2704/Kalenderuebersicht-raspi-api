@@ -9,6 +9,8 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
+using Material.Icons;
+
 
 namespace CalendarDashboard
 {
@@ -20,6 +22,12 @@ namespace CalendarDashboard
         public MainWindow()
         {
             InitializeComponent();
+
+            // Set window size & state from config
+            Width = Config.Width;
+            Height = Config.Height;
+            WindowState = Config.Fullscreen ? WindowState.FullScreen : WindowState.Normal;
+
             RootGrid.SizeChanged += OnRootGridSizeChanged;
             LoadAssets();
             
@@ -87,7 +95,7 @@ namespace CalendarDashboard
 
         private void OnRootGridSizeChanged(object? sender, SizeChangedEventArgs e)
         {
-            double targetRatio = 16.0 / 9.0;
+            double targetRatio = (double)Config.Width / Config.Height;
             double w = e.NewSize.Width;
             double h = e.NewSize.Height;
             
@@ -358,14 +366,14 @@ namespace CalendarDashboard
             if (data.AuthRequired || !string.IsNullOrEmpty(data.Error))
             {
                 TrackInfoLabel.Text = "Spotify-Verknüpfung erforderlich";
-                BtnPlay.Content = "▶";
+                PlayPauseIcon.Kind = MaterialIconKind.Play;
                 return;
             }
 
             if (!string.IsNullOrEmpty(data.Track))
             {
                 TrackInfoLabel.Text = $"{data.Track} - {data.Artist}";
-                BtnPlay.Content = data.IsPlaying ? "⏸" : "▶";
+                PlayPauseIcon.Kind = data.IsPlaying ? MaterialIconKind.Pause : MaterialIconKind.Play;
 
                 _isUpdatingVolume = true;
                 VolSlider.Value = data.Volume;
@@ -374,7 +382,7 @@ namespace CalendarDashboard
             else
             {
                 TrackInfoLabel.Text = "Keine Wiedergabe aktiv";
-                BtnPlay.Content = "▶";
+                PlayPauseIcon.Kind = MaterialIconKind.Play;
             }
         }
 

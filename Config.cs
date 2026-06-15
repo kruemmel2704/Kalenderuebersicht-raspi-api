@@ -7,6 +7,9 @@ namespace CalendarDashboard
     public static class Config
     {
         public static string ApiEndpoint { get; private set; } = "https://localhost:5000";
+        public static int Width { get; private set; } = 1920;
+        public static int Height { get; private set; } = 1080;
+        public static bool Fullscreen { get; private set; } = true;
 
         static Config()
         {
@@ -42,8 +45,26 @@ namespace CalendarDashboard
             {
                 ApiEndpoint = ApiEndpoint.Substring(0, ApiEndpoint.Length - 1);
             }
+
+            string? widthStr = Environment.GetEnvironmentVariable("WIDTH");
+            if (int.TryParse(widthStr, out int w))
+            {
+                Width = w;
+            }
+
+            string? heightStr = Environment.GetEnvironmentVariable("HEIGHT");
+            if (int.TryParse(heightStr, out int h))
+            {
+                Height = h;
+            }
+
+            string? fullscreenStr = Environment.GetEnvironmentVariable("FULLSCREEN");
+            if (bool.TryParse(fullscreenStr, out bool fs))
+            {
+                Fullscreen = fs;
+            }
             
-            Console.WriteLine($"Target API Endpoint: {ApiEndpoint}");
+            Console.WriteLine($"Target API Endpoint: {ApiEndpoint} ({Width}x{Height}, Fullscreen={Fullscreen})");
         }
     }
 }

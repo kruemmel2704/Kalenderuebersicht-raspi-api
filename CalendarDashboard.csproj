@@ -17,6 +17,7 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="dotenv.net" Version="4.0.2" />
+    <PackageReference Include="Material.Icons.Avalonia" Version="3.0.2" />
   </ItemGroup>
   <ItemGroup>
     <None Update="static\**\*.*">

@@ -2,13 +2,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
         mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
         x:Class="CalendarDashboard.MainWindow"
         Title="Calendar Dashboard"
         Background="Black"
-        FontFamily="Inter, $Default"
-        WindowState="FullScreen">
-  
+        FontFamily="Inter, $Default">
+
+
   <Grid Name="RootGrid" Background="Black">
     <Border Name="CalendarContainer" ClipToBounds="True" CornerRadius="0" HorizontalAlignment="Center" VerticalAlignment="Center">
       <Grid RowDefinitions="Auto, *, Auto" Margin="32">
@@ -87,10 +88,18 @@
             <TextBlock Grid.Column="1" Name="TrackInfoLabel" Text="Keine Wiedergabe aktiv" Foreground="#e2e8f0" FontSize="16" FontWeight="Medium" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
             
             <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center" Margin="16,0">
-              <Button Name="BtnPrev" Content="⏮" Click="OnPrevClick" Classes="SpotifyBtn"/>
-              <Button Name="BtnPlay" Content="▶" Click="OnPlayClick" Classes="SpotifyBtn"/>
-              <Button Name="BtnNext" Content="⏭" Click="OnNextClick" Classes="SpotifyBtn"/>
-              <Button Name="BtnPlaylist" Content="☰" Click="OnPlaylistClick" Classes="SpotifyBtn"/>
+              <Button Name="BtnPrev" Click="OnPrevClick" Classes="SpotifyBtn">
+                <materialIcons:MaterialIcon Kind="SkipPrevious" Width="24" Height="24" Foreground="#e2e8f0"/>
+              </Button>
+              <Button Name="BtnPlay" Click="OnPlayClick" Classes="SpotifyBtn">
+                <materialIcons:MaterialIcon Name="PlayPauseIcon" Kind="Play" Width="24" Height="24" Foreground="#e2e8f0"/>
+              </Button>
+              <Button Name="BtnNext" Click="OnNextClick" Classes="SpotifyBtn">
+                <materialIcons:MaterialIcon Kind="SkipNext" Width="24" Height="24" Foreground="#e2e8f0"/>
+              </Button>
+              <Button Name="BtnPlaylist" Click="OnPlaylistClick" Classes="SpotifyBtn">
+                <materialIcons:MaterialIcon Kind="PlaylistPlay" Width="24" Height="24" Foreground="#e2e8f0"/>
+              </Button>
             </StackPanel>
             
             <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center" Spacing="8">
